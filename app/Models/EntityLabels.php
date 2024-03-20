@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use PhpParser\Node\Stmt\Label;
 
-class Entity extends Model
+class EntityLabels extends Model
 {
     use HasFactory;
 
+    protected $table = 'entity_labels';
     protected $guarded = false;
-
 }
