@@ -9,8 +9,15 @@ use Illuminate\Http\Request;
 
 class LabelsController extends Controller
 {
-    public function index()
+    public function index(Request $request, $id, $type)
     {
+        $id_entity = Entities::find($id);
+        $type = $id_entity->type;
+        dd($type);
+//        $entities = Entities::all();
+//        dd($entities->type);
+
+//        $type_entity = Entities
         $labels = Labels::all();
 //        dd($labels);
 //        dd($labels->toArray());
