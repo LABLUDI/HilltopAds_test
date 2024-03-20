@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('entities', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ['user', 'campaign', 'site']);
+            $table->unsignedBigInteger('id_labels');
+            $table->foreign('id_labels')->references('id')->on('labels')->onDelete('cascade');
             $table->timestamps();
         });
     }

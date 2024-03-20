@@ -9,11 +9,15 @@ use Illuminate\Http\Request;
 
 class LabelsController extends Controller
 {
-    public function index(Request $request, $id, $type)
+    public function get_labels($type)
     {
-        $id_entity = Entities::find($id);
-        $type = $id_entity->type;
-        dd($type);
+        // пока не понял зачем нужен id
+//        $id_entity = Entities::find($id);
+        $type_entity = Entities::where('type', $type)
+            ->join('labels', 'entities.id_labels', '=', 'labels.id')
+            ->get(['labels.*']);
+//        $type = $id_entity->type;
+        dd($type_entity->toArray());
 //        $entities = Entities::all();
 //        dd($entities->type);
 
@@ -27,13 +31,15 @@ class LabelsController extends Controller
         return view('labels.index', compact('labels'));
     }
 
+
+
     public function show()
     {
         $label = Labels::find(3);
         dd($label->toArray());
     }
 
-    public function update()
+    public function update(Request $request)
     {
         $label = Labels::find(4);
         $label->update([
@@ -47,7 +53,7 @@ class LabelsController extends Controller
     {
         $labels =
             [
-                'name' => 'n4,32m',
+                'name' => ' b312hgv',
             ];
 
         Labels::create($labels);

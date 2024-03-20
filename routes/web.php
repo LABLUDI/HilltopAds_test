@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/labels/{id}/{type}', [\App\Http\Controllers\LabelsController::class, 'index'])->name('labels.index');
+Route::get('/labels/{type}', [\App\Http\Controllers\LabelsController::class, 'get_labels'])->name('labels.index');
 Route::get('/labels/show', [\App\Http\Controllers\LabelsController::class, 'show'])->name('labels.show');
 Route::get('/labels/create', [\App\Http\Controllers\LabelsController::class, 'create'])->name('labels.create');
 Route::get('/labels/update', [\App\Http\Controllers\LabelsController::class, 'update'])->name('labels.update');
