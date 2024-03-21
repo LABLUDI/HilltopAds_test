@@ -16,12 +16,14 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->timestamps();
-            $names = ['Label1', 'Label2', 'Label3'];
-
-            foreach ($names as $name) {
-                DB::table('labels')->insert(['name' => $name]);
-            }
         });
+
+        // Заполнение таблицы labels
+        DB::table('labels')->insert([
+            ['name' => 'Label1'],
+            ['name' => 'Label2'],
+            ['name' => 'Label3'],
+        ]);
 
 
     }

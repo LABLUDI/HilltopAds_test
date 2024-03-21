@@ -11,38 +11,9 @@ class Labels extends Model
     protected $table = 'labels';
     protected $guarded = false;
 
+
+    public function entities()
+    {
+        return $this->belongsToMany(Entities::class, 'entity_labels', 'label_id', 'entity_id');
+    }
 }
-
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
-use App\Models\Entities;
-
-use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        DB::table('entities')->insert([
-            ['type' => 'user'],
-            ['type' => 'campaign'],
-            ['type' => 'site']
-        ]);
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        DB::table('entities')->whereIn('type', ['user', 'company', 'site'])->delete();
-    }
-};

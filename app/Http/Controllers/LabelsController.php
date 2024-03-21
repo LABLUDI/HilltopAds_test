@@ -6,66 +6,25 @@ use App\Models\Labels;
 use App\Models\EntityLabels;
 use App\Models\Entities;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LabelsController extends Controller
 {
-    public function get_labels($type)
+    public function getLabels($entityId, $entityType)
     {
-        // пока не понял зачем нужен id
-//        $id_entity = Entities::find($id);
-        $type_entity = Entities::where('type', $type)
-            ->join('labels', 'entities.id_labels', '=', 'labels.id')
-            ->get(['labels.*']);
-//        $type = $id_entity->type;
-        dd($type_entity->toArray());
-//        $entities = Entities::all();
-//        dd($entities->type);
+        // Проверяем, существует ли сущность с указанным типом и идентификатором
+        $entity = Entities::where('type', $entityType)->find($entityId);
 
-//        $type_entity = Entities
-        $labels = Labels::all();
-//        dd($labels);
-//        dd($labels->toArray());
-//        foreach ($labels as $label) {
-//            dump($label->name);
-//        };
-        return view('labels.index', compact('labels'));
+        // Если сущность не найдена, генерируем ошибку
+        if (!$entity) {
+            throw new \InvalidArgumentException('Сущность не найдена');
+        }
+
+        // Получаем все метки для найденной сущности
+        $labels = $entity->labels()->get();
+
+        // Возвращаем найденные метки
+        return dd($labels->toArray());
     }
 
-
-
-    public function show()
-    {
-        $label = Labels::find(3);
-        dd($label->toArray());
-    }
-
-    public function update(Request $request)
-    {
-        $label = Labels::find(4);
-        $label->update([
-            'name' => 'K.O'
-        ]);
-
-        return 'Данные обновлены!';
-    }
-
-    public function create(): string
-    {
-        $labels =
-            [
-                'name' => ' b312hgv',
-            ];
-
-        Labels::create($labels);
-
-        return 'Labels созданы!';
-    }
-
-    public function delete()
-    {
-        $label = Labels::find(4);
-        $label->delete();
-
-        return 'Данные удалены!';
-    }
 }
